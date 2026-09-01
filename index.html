@@ -346,6 +346,12 @@ function importData(){const i=document.createElement("input");i.type="file";i.ac
 function printSummary(){const p=pet(),h=data.health.filter(x=>x.petId===p.id),r=data.reminders.filter(x=>x.petId===p.id);const w=window.open("","_blank");if(!w){alert("Consenti le finestre pop-up per stampare.");return}w.document.write(`<html><head><title>${esc(p.name)} — Vet Summary</title><style>body{font-family:Arial;padding:25px}li{margin:6px 0}.box{border:1px solid #ddd;padding:12px;border-radius:10px;margin:12px 0}</style></head><body><h1>🐾 ${esc(p.name)} — Scheda veterinaria</h1><div class="box"><b>Specie:</b> ${esc(p.species)}<br><b>Razza:</b> ${esc(p.breed)}<br><b>Nascita:</b> ${esc(p.dob)}<br><b>Microchip:</b> ${esc(p.microchip)}<br><b>Proprietario:</b> ${esc(p.owner)}<br><b>Telefono:</b> ${esc(p.phone)}<br><b>Peso:</b> ${esc(p.weight)}</div><div class="box"><h3>Salute</h3><ul>${h.map(x=>`<li>${esc(x.date)} — ${esc(x.type)} — ${esc(x.title)} ${x.notes?"("+esc(x.notes)+")":""}</li>`).join("")||"<li>Nessun record</li>"}</ul></div><div class="box"><h3>Promemoria</h3><ul>${r.map(x=>`<li>${esc(x.date)} — ${esc(x.title)}</li>`).join("")||"<li>Nessuno</li>"}</ul></div><script>window.print()<\/script></body></html>`);w.document.close()}
 
 renderPetbar();home();
+ if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js", { scope: "./" })
+      .catch(error => console.error("Service Worker:", error));
+  });
+ }
 </script>
 </body>
 </html>
