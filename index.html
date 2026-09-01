@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#E91E63">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512x512.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#a84f7f">
+<title>Pet Care Organizer — 2.1 Documents PRO</title>
+<style>
+:root{--accent:#a84f7f;--soft:#f7e8f0;--bg:#fff7fb;--ink:#30242b;--muted:#766b74;--line:#e6dce3;--card:#fff;--shadow:0 10px 28px rgba(80,30,60,.09)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,sans-serif}
+body:before{content:"🐾";position:fixed;left:-20px;top:170px;font-size:100px;opacity:.09;z-index:-1;transform:rotate(-20deg)}
+body:after{content:"🐱";position:fixed;right:-25px;bottom:120px;font-size:100px;opacity:.08;z-index:-1}
+.app{max-width:1100px;margin:auto;padding:14px 12px 50px}
+header{text-align:center;padding:10px 0 14px}.tag{display:inline-block;padding:7px 12px;border-radius:99px;background:var(--soft);color:var(--accent);font-weight:900;font-size:11px}
+h1{font-size:clamp(34px,7vw,58px);line-height:.98;margin:12px 0 8px}.lead{color:var(--muted);margin:0 auto;max-width:650px}
+.petbar{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:15px 0}.petchip,.navbtn,.btn{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:12px;padding:10px 13px;font-weight:900;cursor:pointer}.petchip.active,.navbtn.active,.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.nav{display:flex;gap:7px;overflow-x:auto;padding:5px 2px 10px;scrollbar-width:none}.nav::-webkit-scrollbar{display:none}.navbtn{white-space:nowrap;flex:0 0 auto}
+main{min-height:400px}.panel{background:rgba(255,255,255,.97);border:1px solid var(--line);border-radius:22px;padding:18px;margin-bottom:13px;box-shadow:var(--shadow)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.full{grid-column:1/-1}.field label{display:block;font-size:12px;font-weight:900;margin:0 0 6px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:11px;padding:11px;background:#fff;font:inherit;color:var(--ink)}.field textarea{min-height:90px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.between{justify-content:space-between}.muted{color:var(--muted);line-height:1.5;font-size:13px}
+.dashboard{display:grid;grid-template-columns:1.4fr repeat(4,1fr);gap:9px}.hero{background:linear-gradient(135deg,var(--accent),#c47aa0);color:#fff;border-radius:17px;padding:16px}.hero h2{margin:0 0 6px}.stat{border:1px solid var(--line);border-radius:15px;padding:13px;text-align:center}.stat b{display:block;font-size:23px}.stat span{font-size:11px;color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.card{border:1px solid var(--line);border-radius:15px;padding:13px;background:#fff}.card h3{margin:0 0 6px}
+.notice{padding:11px;border-radius:12px;background:var(--soft);color:#67445a;font-size:13px;margin:10px 0}.empty{padding:25px;text-align:center;border:1px dashed var(--line);border-radius:14px;color:var(--muted)}
+.photoarea{display:flex;gap:15px;align-items:center;margin-bottom:17px}.photo{width:105px;height:105px;border-radius:24px;background:var(--soft);border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:45px;overflow:hidden;flex:none}.photo img{width:100%;height:100%;object-fit:cover}.hidden{display:none!important}
+.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:9px;border-bottom:1px solid var(--line)}th{font-size:10px;color:var(--muted);text-transform:uppercase}
+.foldergrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.folder{border:1px solid var(--line);border-radius:15px;padding:13px;background:#fff}.doc-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.filepill{display:inline-block;padding:6px 9px;border-radius:10px;background:var(--soft);color:var(--accent);font-size:12px;font-weight:800}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.kpi{text-align:center;border:1px solid var(--line);border-radius:15px;padding:14px}.kpi b{font-size:23px;display:block}
+.calendar{display:grid;grid-template-columns:repeat(7,minmax(45px,1fr));gap:6px}.calhead{text-align:center;font-size:10px;color:var(--muted);font-weight:900;padding:4px}.day{min-height:78px;border:1px solid var(--line);border-radius:10px;padding:7px;background:#fff;font-size:11px}.day.today{outline:2px solid var(--accent)}.day small{display:block;margin-top:5px;color:var(--accent);font-weight:800}
+.themes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.theme{border:2px solid var(--line);border-radius:15px;padding:13px;background:#fff;text-align:left;cursor:pointer}.theme.active{border-color:var(--accent)}.sw{display:flex;gap:5px;margin:8px 0}.sw i{width:22px;height:22px;border-radius:50%}
+.modal{position:fixed;inset:0;background:rgba(30,20,28,.6);display:none;align-items:center;justify-content:center;padding:14px;z-index:20}.modal.open{display:flex}.modalbox{background:#fff;width:min(560px,100%);max-height:90vh;overflow:auto;border-radius:20px;padding:18px}
+footer{text-align:center;color:#8b8188;font-size:11px;margin-top:15px}
+@media(max-width:850px){.dashboard{grid-template-columns:1fr 1fr}.hero{grid-column:1/-1}}
+@media(max-width:650px){.grid,.cards,.foldergrid,.themes,.kpis{grid-template-columns:1fr}.full{grid-column:auto}.photoarea{align-items:flex-start}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+<div class="tag">🐾 PET CARE ORGANIZER • 2.1 DOCUMENTS PRO</div>
+<h1>Organizzatore per la cura degli animali domestici</h1>
+<p class="lead">Salute, promemoria, documenti, spese e profilo del tuo animale in un unico posto.</p>
+<div id="petbar" class="petbar"></div>
+</header>
+<nav id="nav" class="nav">
+<button class="navbtn active" data-page="home">🏠 Dashboard</button>
+<button class="navbtn" data-page="profile">🐾 Profilo</button>
+<button class="navbtn" data-page="health">🏥 Salute</button>
+<button class="navbtn" data-page="reminders">⏰ Promemoria</button>
+<button class="navbtn" data-page="expenses">💰 Spese</button>
+<button class="navbtn" data-page="documents">📁 Documenti</button>
+<button class="navbtn" data-page="calendar">📅 Calendario</button>
+<button class="navbtn" data-page="insights">📊 Approfondimenti</button>
+<button class="navbtn" data-page="settings">🎨 Temi</button>
+</nav>
+<main id="main"></main>
+<footer>Offline • Dati salvati sul dispositivo • Nessuna API • Versione 2.1</footer>
+</div>
+
+<div id="modal" class="modal"><div id="modalbox" class="modalbox"></div></div>
+
+<script>
+"use strict";
+const STORE="petcare_organizer_v20";
+const THEMES={
+ rose:{name:"Rose Paw",accent:"#a84f7f",soft:"#f7e8f0",bg:"#fff7fb",emoji:"🐾"},
+ lavender:{name:"Lavender Cat",accent:"#7658bd",soft:"#eee9fb",bg:"#f8f6ff",emoji:"🐱"},
+ mint:{name:"Mint Kitty",accent:"#4c957e",soft:"#e4f5ef",bg:"#f3fbf8",emoji:"🐱"},
+ sky:{name:"Sky Bunny",accent:"#4d82bd",soft:"#e5f0fb",bg:"#f4f9fd",emoji:"🐰"},
+ sunny:{name:"Sunny Duck",accent:"#d39a31",soft:"#fff0c9",bg:"#fffaf0",emoji:"🦆"},
+ fox:{name:"Berry Fox",accent:"#9c4d76",soft:"#f4e5ee",bg:"#fcf5f9",emoji:"🦊"}
+};
+let data;
+try{data=JSON.parse(localStorage.getItem(STORE)||"null")}catch(e){data=null}
+if(!data||!Array.isArray(data.pets)){
+ data={version:2,pets:[],activePet:null,health:[],reminders:[],expenses:[],documents:[],folders:[],theme:"rose"};
+}
+if(!Array.isArray(data.health))data.health=[];
+if(!Array.isArray(data.reminders))data.reminders=[];
+if(!Array.isArray(data.expenses))data.expenses=[];
+if(!Array.isArray(data.documents))data.documents=[];
+if(!Array.isArray(data.folders))data.folders=[];
+data.pets.forEach(p=>{if(p.photo===undefined)p.photo=""});
+function save(){localStorage.setItem(STORE,JSON.stringify(data))}
+function id(){return Date.now()+Math.floor(Math.random()*99999)}
+function esc(x){return String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function val(id){const e=document.getElementById(id);return e?e.value:""}
+function pet(){return data.pets.find(p=>p.id===data.activePet)||data.pets[0]}
+function today(){return new Date().toISOString().slice(0,10)}
+function money(n){return new Intl.NumberFormat("de-DE",{style:"currency",currency:"EUR"}).format(Number(n)||0)}
+function daysTo(d){if(!d)return 9999;return Math.ceil((new Date(d+"T23:59:59")-new Date())/86400000)}
+function age(d){if(!d)return "Età non impostata";let b=new Date(d),n=new Date(),y=n.getFullYear()-b.getFullYear();if(n.getMonth()<b.getMonth()||(n.getMonth()==b.getMonth()&&n.getDate()<b.getDate()))y--;return y+" anni"}
+function applyTheme(){const t=THEMES[data.theme]||THEMES.rose;document.documentElement.style.setProperty("--accent",t.accent);document.documentElement.style.setProperty("--soft",t.soft);document.documentElement.style.setProperty("--bg",t.bg)}
+function ensurePet(){if(!data.pets.length){const p={id:id(),name:"Nuovo animale domestico",species:"Cane",breed:"",dob:"",sex:"",color:"",microchip:"",owner:"",phone:"",weight:"",notes:"",photo:""};data.pets.push(p);data.activePet=p.id;save()}else if(!pet()){data.activePet=data.pets[0].id;save()}}
+ensurePet();applyTheme();
+
+function renderPetbar(){
+ const bar=document.getElementById("petbar");
+ bar.innerHTML=data.pets.map(p=>`<button class="petchip ${p.id===data.activePet?"active":""}" data-pet="${p.id}">🐾 ${esc(p.name)}</button>`).join("")+
+ `<button class="petchip" data-action="new-pet">＋ Aggiungi animale</button>`;
+}
+document.getElementById("petbar").addEventListener("click",e=>{
+ const b=e.target.closest("[data-pet]");if(b){data.activePet=Number(b.dataset.pet);save();renderPetbar();show("home");}
+ const a=e.target.closest("[data-action]");if(a&&a.dataset.action==="new-pet")newPet();
+});
+
+const renderers={home,profile,health,reminders,expenses,documents,calendar,insights,settings};
+function show(name){
+ if(!renderers[name])name="home";
+ document.querySelectorAll("#nav .navbtn").forEach(b=>b.classList.toggle("active",b.dataset.page===name));
+ renderers[name]();
+ window.scrollTo(0,0);
+}
+document.getElementById("nav").addEventListener("click",e=>{
+ const b=e.target.closest(".navbtn");if(!b)return;
+ e.preventDefault();show(b.dataset.page);
+});
+
+function home(){
+ renderPetbar();const p=pet(),h=data.health.filter(x=>x.petId===p.id),r=data.reminders.filter(x=>x.petId===p.id),ex=data.expenses.filter(x=>x.petId===p.id);
+ const total=ex.reduce((a,x)=>a+Number(x.amount||0),0),up=r.filter(x=>daysTo(x.date)>=0&&daysTo(x.date)<=30).sort((a,b)=>a.date.localeCompare(b.date));
+ document.getElementById("main").innerHTML=`<section class="panel"><div class="dashboard">
+ <div class="hero"><h2>🐾 ${esc(p.name)}</h2><div>${esc(p.species)}${p.breed?" • "+esc(p.breed):""}</div><div style="margin-top:8px">${esc(age(p.dob))}${p.weight?" • "+esc(p.weight)+" kg":""}</div></div>
+ <div class="stat"><b>${h.length}</b><span>Salute</span></div><div class="stat"><b>${r.length}</b><span>Promemoria</span></div><div class="stat"><b>${money(total)}</b><span>Spese</span></div><div class="stat"><b>${data.documents.filter(x=>x.petId===p.id).length}</b><span>Documenti</span></div>
+ </div></section>
+ <section class="panel"><div class="actions between"><h2>⏰ Prossime scadenze</h2><button class="btn primary" data-action="add-reminder">+ Promemoria</button></div>
+ ${up.length?up.map(x=>`<div class="notice"><b>${esc(x.title)}</b> — ${esc(x.date)} · ${daysTo(x.date)===0?"Oggi":"tra "+daysTo(x.date)+" giorni"}</div>`).join(""):`<div class="empty">Nessuna scadenza nei prossimi 30 giorni 🎉</div>`}</section>
+ <section class="panel"><h2>⚡ Azioni rapide</h2><div class="actions"><button class="btn primary" data-action="add-health">+ Salute</button><button class="btn" data-action="add-reminder">+ Promemoria</button><button class="btn" data-action="add-expense">+ Spesa</button><button class="btn" data-action="add-document">+ Documento</button></div></section>`;
+}
+
+function profile(){
+ const p=pet();
+ document.getElementById("main").innerHTML=`<section class="panel"><h2>🐾 Profilo dell'animale domestico</h2>
+ <div class="photoarea"><div id="photo" class="photo">${p.photo?`<img src="${p.photo}" alt="Foto pet">`:"🐾"}</div>
+ <div><b>${esc(p.name)}</b><p class="muted">Scegli una foto dal telefono o dal computer.</p>
+ <label class="btn primary" style="display:inline-block;cursor:pointer">📷 Scegli la foto<input id="photoInput" type="file" accept="image/*" class="hidden"></label>
+ <button class="btn" data-action="remove-photo">Rimuovere</button></div></div>
+ <div class="grid">
+ ${input("pname","Nome dell'animale domestico",p.name)}${select("pspecies","Specie",p.species,["Cane","Gatto","Coniglio","Uccello","Criceto","Porcellino d'India","Altro"])}
+ ${input("pbreed","Razza",p.breed)}${input("pdob","Data di nascita",p.dob,"date")}${input("psex","Sesso",p.sex)}${input("pcolor","Colore",p.color)}
+ ${input("pchip","Microchip",p.microchip)}${input("pweight","Peso attuale (kg)",p.weight,"number")}
+ ${input("powner","Nome proprietario",p.owner)}${input("pphone","Telefono emergenza",p.phone)}
+ <div class="field full"><label>Note</label><textarea id="pnotes">${esc(p.notes)}</textarea></div></div>
+ <div class="actions"><button class="btn primary" data-action="save-profile">Salva profilo</button></div></section>
+ <section class="panel"><h2>🐶 I miei animali</h2><div class="cards">${data.pets.map(x=>`<div class="card"><h3>🐾 ${esc(x.name)}</h3><p class="muted">${esc(x.species)}${x.breed?" • "+esc(x.breed):""}</p><button class="btn primary" data-pet="${x.id}">Apri</button> ${data.pets.length>1?`<button class="btn" data-delete-pet="${x.id}">Elimina</button>`:""}</div>`).join("")}</div></section>`;
+}
+function input(id,label,v,type="text"){return `<div class="field"><label>${label}</label><input id="${id}" type="${type}" value="${esc(v)}"></div>`}
+function select(id,label,v,opts){return `<div class="field"><label>${label}</label><select id="${id}">${opts.map(o=>`<option value="${esc(o)}" ${o===v?"selected":""}>${esc(o)}</option>`).join("")}</select></div>`}
+
+function health(){
+ const rows=data.health.filter(x=>x.petId===pet().id).sort((a,b)=>b.date.localeCompare(a.date));
+ document.getElementById("main").innerHTML=`<section class="panel"><div class="actions between"><h2>🏥 Salute</h2><button class="btn primary" data-action="add-health">+ Aggiungi</button></div>
+ ${rows.length?`<div class="tablewrap"><table><tr><th>Data</th><th>Tipo</th><th>Titolo</th><th>Note</th><th></th></tr>${rows.map(x=>`<tr><td>${esc(x.date)}</td><td>${esc(x.type)}</td><td>${esc(x.title)}</td><td>${esc(x.notes)}</td><td><button class="btn" data-del="health" data-id="${x.id}">Elimina</button></td></tr>`).join("")}</table></div>`:`<div class="empty">Nessun record sanitario.</div>`}</section>`;
+}
+function reminders(){
+ const rows=data.reminders.filter(x=>x.petId===pet().id).sort((a,b)=>a.date.localeCompare(b.date));
+ document.getElementById("main").innerHTML=`<section class="panel"><div class="actions between"><h2>⏰ Promemoria</h2><button class="btn primary" data-action="add-reminder">+ Aggiungi</button></div>
+ ${rows.length?rows.map(x=>`<div class="card" style="margin-top:9px"><div class="actions between"><div><h3>${esc(x.title)}</h3><p class="muted">${esc(x.date)} · ${daysTo(x.date)<0?"Scaduto":daysTo(x.date)===0?"Oggi":"tra "+daysTo(x.date)+" giorni"}${x.repeat&&x.repeat!=="Nessuno"?" · "+esc(x.repeat):""}</p></div><button class="btn" data-del="reminders" data-id="${x.id}">Elimina</button></div></div>`).join(""):`<div class="empty">Nessun promemoria.</div>`}</section>`;
+}
+function expenses(){
+ const rows=data.expenses.filter(x=>x.petId===pet().id).sort((a,b)=>b.date.localeCompare(a.date)),total=rows.reduce((a,x)=>a+Number(x.amount||0),0),year=new Date().getFullYear(),yt=rows.filter(x=>x.date.startsWith(String(year))).reduce((a,x)=>a+Number(x.amount||0),0);
+ document.getElementById("main").innerHTML=`<section class="panel"><div class="actions between"><h2>💰 Spese</h2><button class="btn primary" data-action="add-expense">+ Aggiungi</button></div><div class="kpis"><div class="kpi"><b>${money(total)}</b><span class="muted">Totale</span></div><div class="kpi"><b>${money(yt)}</b><span class="muted">${year}</span></div><div class="kpi"><b>${rows.length}</b><span class="muted">Voci</span></div></div>
+ ${rows.length?`<div class="tablewrap" style="margin-top:10px"><table><tr><th>Data</th><th>Categoria</th><th>Descrizione</th><th>Importo</th><th></th></tr>${rows.map(x=>`<tr><td>${esc(x.date)}</td><td>${esc(x.category)}</td><td>${esc(x.description)}</td><td>${money(x.amount)}</td><td><button class="btn" data-del="expenses" data-id="${x.id}">Elimina</button></td></tr>`).join("")}</table></div>`:`<div class="empty">Nessuna spesa ancora.</div>`}</section>`;
+}
+function documents(){
+ const p=pet(),rows=data.documents.filter(x=>x.petId===p.id),folders=data.folders.filter(x=>x.petId===p.id);
+ const folderName=fid=>{const f=folders.find(z=>z.id===fid);return f?f.name:"Senza cartella"};
+ document.getElementById("main").innerHTML=`<section class="panel">
+ <div class="actions between"><h2>📁 Documenti</h2><div class="actions">
+ <button class="btn" data-action="add-folder">+ Cartella</button>
+ <button class="btn primary" data-action="add-document">+ Documento</button>
+ </div></div>
+ <div class="notice">Organizza i documenti del tuo animale, modificali, spostali tra cartelle e allega PDF o immagini.</div>
+ <h3>📂 Cartelle</h3>
+ ${folders.length?`<div class="foldergrid">${folders.map(f=>`<div class="folder"><h3>📂 ${esc(f.name)}</h3><p class="muted">${rows.filter(d=>d.folderId===f.id).length} documenti</p><button class="btn" data-del-folder="${f.id}">Elimina cartella</button></div>`).join("")}</div>`:`<div class="empty">Nessuna cartella. Premi “+ Cartella”.</div>`}
+ <h3 style="margin-top:18px">📄 Documenti</h3>
+ ${rows.length?`<div class="cards">${rows.map(d=>`<div class="card">
+ <h3>📄 ${esc(d.title)}</h3>
+ <p class="muted">${esc(d.type)} · 📂 ${esc(folderName(d.folderId))}</p>
+ <p class="muted">${esc(d.location||"Nessuna posizione")}${d.fileName?`<br><span class="filepill">📎 ${esc(d.fileName)}${d.fileSize?" · "+formatBytes(d.fileSize):""}</span>`:""}</p>
+ <div class="doc-actions">
+ <button class="btn primary" data-edit-document="${d.id}">✏️ Modifica</button>
+ ${d.fileName?`<button class="btn" data-open-document="${d.id}">📎 Apri allegato</button>`:`<button class="btn" data-attach-document="${d.id}">📎 Allega file</button>`}
+ <button class="btn" data-del="documents" data-id="${d.id}">🗑️ Elimina</button>
+ </div>
+ </div>`).join("")}</div>`:`<div class="empty">Nessun documento. Premi “+ Documento”.</div>`}
+ </section>`;
+}
+function calendar(){
+ const p=pet(),r=data.reminders.filter(x=>x.petId===p.id),now=new Date(),y=now.getFullYear(),m=now.getMonth(),first=new Date(y,m,1).getDay(),count=new Date(y,m+1,0).getDate();let cells="";
+ for(let i=0;i<first;i++)cells+="<div></div>";
+ for(let d=1;d<=count;d++){const ds=`${y}-${String(m+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`,items=r.filter(x=>x.date===ds),todayFlag=d===now.getDate();cells+=`<div class="day ${todayFlag?"today":""}"><b>${d}</b>${items.map(x=>`<small>⏰ ${esc(x.title)}</small>`).join("")}</div>`}
+ document.getElementById("main").innerHTML=`<section class="panel"><h2>📅 Calendario delle cure — ${now.toLocaleString("it-IT",{month:"long",year:"numeric"})}</h2><div class="calendar">${["Dom","Lun","Mar","Mer","Gio","Ven","Sab"].map(x=>`<div class="calhead">${x}</div>`).join("")}${cells}</div></section>`;
+}
+function insights(){
+ const p=pet(),ex=data.expenses.filter(x=>x.petId===p.id),total=ex.reduce((a,x)=>a+Number(x.amount||0),0),cats={};ex.forEach(x=>cats[x.category]=(cats[x.category]||0)+Number(x.amount||0));
+ document.getElementById("main").innerHTML=`<section class="panel"><h2>📊 Approfondimenti</h2><div class="kpis"><div class="kpi"><b>${money(total)}</b><span class="muted">Spesa totale</span></div><div class="kpi"><b>${ex.length}</b><span class="muted">Transazioni</span></div><div class="kpi"><b>${data.health.filter(x=>x.petId===p.id).length}</b><span class="muted">Record salute</span></div></div></section>
+ <section class="panel"><h2>💰 Spese per categoria</h2>${Object.keys(cats).length?Object.entries(cats).map(([k,v])=>`<div style="margin:12px 0"><div class="actions between"><b>${esc(k)}</b><span>${money(v)}</span></div><div style="height:9px;background:#eee;border-radius:99px"><div style="height:9px;width:${Math.round(v/Math.max(...Object.values(cats))*100)}%;background:var(--accent);border-radius:99px"></div></div></div>`).join(""):`<div class="empty">Aggiungi delle spese per vedere gli approfondimenti.</div>`}</section>`;
+}
+function settings(){
+ document.getElementById("main").innerHTML=`<section class="panel"><h2>🎨 Temi animaletti</h2><p class="muted">Cambia colori e decorazioni senza toccare i dati.</p><div class="themes">${Object.entries(THEMES).map(([k,t])=>`<button class="theme ${data.theme===k?"active":""}" data-theme="${k}"><b>${t.emoji} ${esc(t.name)}</b><div class="sw"><i style="background:${t.accent}"></i><i style="background:${t.soft}"></i><i style="background:${t.bg}"></i></div></button>`).join("")}</div></section>
+ <section class="panel"><h2>💾 Backup</h2><p class="muted">Esporta una copia dei dati prima di cambiare dispositivo.</p><div class="actions"><button class="btn primary" data-action="export">📤 Esporta backup</button><button class="btn" data-action="import">📥 Importa backup</button><button class="btn" data-action="print">🖨️ Scheda veterinaria</button></div></section>`;
+}
+
+function openModal(title,body){document.getElementById("modalbox").innerHTML=`<h2>${title}</h2>${body}`;document.getElementById("modal").classList.add("open")}
+function closeModal(){document.getElementById("modal").classList.remove("open")}
+document.getElementById("modal").addEventListener("click",async e=>{if(e.target.id==="modal")closeModal()});
+function addHealth(){openModal("🏥 Nuovo record",input("hdate","Data",today(),"date")+select("htype","Tipo","Visita veterinaria",["Visita veterinaria","Vaccinazione","Sverminazione","Antiparassitario","Farmaco","Allergia","Operazione","Esame / laboratorio","Peso","Altro"])+input("htitle","Titolo","")+`<div class="field"><label>Note</label><textarea id="hnotes"></textarea></div><div class="actions"><button class="btn primary" data-modal="save-health">Salva</button><button class="btn" data-modal="close">Annulla</button></div>`)}
+function addReminder(){openModal("⏰ Nuovo promemoria",input("rtitle","Promemoria","")+input("rdate","Data",today(),"date")+select("rrepeat","Ripetizione","Nessuno",["Nessuno","Ogni settimana","Ogni mese","Ogni 3 mesi","Ogni 6 mesi","Ogni anno"])+`<div class="actions"><button class="btn primary" data-modal="save-reminder">Salva</button><button class="btn" data-modal="close">Annulla</button></div>`)}
+function addExpense(){openModal("💰 Nuova spesa",input("edate","Data",today(),"date")+select("ecat","Categoria","Veterinario",["Veterinario","Cibo","Farmaci","Toelettatura","Assicurazione","Accessori","Addestramento","Altro"])+input("edesc","Descrizione","")+input("eamount","Importo (€)","0","number")+`<div class="actions"><button class="btn primary" data-modal="save-expense">Salva</button><button class="btn" data-modal="close">Annulla</button></div>`)}
+function addFolder(){openModal("📂 Nuova cartella",input("fname","Nome cartella","Veterinario")+`<div class="actions"><button class="btn primary" data-modal="save-folder">Crea</button><button class="btn" data-modal="close">Annulla</button></div>`)}
+
+/* ===== DOCUMENTS PRO ===== */
+const DOC_FILE_DB="petcare_documents_files_v21";
+function openDocFileDB(){
+ return new Promise(resolve=>{
+  if(!window.indexedDB){resolve(null);return}
+  const req=indexedDB.open(DOC_FILE_DB,1);
+  req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains("files"))req.result.createObjectStore("files")};
+  req.onsuccess=()=>resolve(req.result);
+  req.onerror=()=>resolve(null);
+ });
+}
+async function storeDocFile(docId,file){
+ const db=await openDocFileDB();if(!db)return false;
+ return new Promise(resolve=>{
+  const tx=db.transaction("files","readwrite");
+  tx.objectStore("files").put(file,String(docId));
+  tx.oncomplete=()=>{db.close();resolve(true)};
+  tx.onerror=()=>{db.close();resolve(false)};
+ });
+}
+async function readDocFile(docId){
+ const db=await openDocFileDB();if(!db)return null;
+ return new Promise(resolve=>{
+  const req=db.transaction("files","readonly").objectStore("files").get(String(docId));
+  req.onsuccess=()=>{const f=req.result||null;db.close();resolve(f)};
+  req.onerror=()=>{db.close();resolve(null)};
+ });
+}
+async function removeDocFile(docId){
+ const db=await openDocFileDB();if(!db)return;
+ const tx=db.transaction("files","readwrite");
+ tx.objectStore("files").delete(String(docId));
+}
+function formatBytes(n){
+ if(!Number.isFinite(n))return "";
+ if(n<1024)return n+" B";
+ if(n<1024*1024)return (n/1024).toFixed(1)+" KB";
+ return (n/1024/1024).toFixed(1)+" MB";
+}
+function editDocument(docId){
+ const d=data.documents.find(x=>x.id===docId);if(!d)return;
+ const fs=data.folders.filter(x=>x.petId===pet().id);
+ const opts=["Senza cartella"].concat(fs.map(f=>String(f.id)+" — "+f.name));
+ const current=d.folderId?String(d.folderId)+" — "+(fs.find(f=>f.id===d.folderId)?.name||""):"Senza cartella";
+ openModal("✏️ Modifica documento",
+  input("editTitle","Nome documento",d.title)+
+  select("editType","Tipo",d.type,["Veterinario","Assicurazione","Microchip","Vaccinazione","Prescrizione","Ricevuta","Adozione","Esame / laboratorio","Altro"])+
+  select("editFolder","Cartella",current,opts)+
+  input("editLocation","Dove è conservato?",d.location||"")+
+  `<div class="field"><label>Sostituisci allegato</label><input id="editFile" type="file" accept=".pdf,image/*,.doc,.docx"></div>`+
+  `<p class="muted">${d.fileName?"📎 Allegato attuale: "+esc(d.fileName):"Nessun allegato"}</p>`+
+  `<div class="actions"><button class="btn primary" data-modal="update-document" data-doc-id="${docId}">Salva modifiche</button><button class="btn" data-modal="close">Annulla</button></div>`
+ );
+}
+function attachDocument(docId){
+ const inputEl=document.createElement("input");
+ inputEl.type="file";inputEl.accept=".pdf,image/*,.doc,.docx";
+ inputEl.onchange=async()=>{
+  const file=inputEl.files&&inputEl.files[0];if(!file)return;
+  if(file.size>15*1024*1024){alert("File troppo grande. Massimo 15 MB.");return}
+  const ok=await storeDocFile(docId,file);
+  if(!ok){alert("Il dispositivo non permette il salvataggio dell'allegato.");return}
+  const d=data.documents.find(x=>x.id===docId);
+  if(d){d.fileName=file.name;d.fileSize=file.size;d.fileType=file.type||"application/octet-stream";save();documents()}
+ };
+ inputEl.click();
+}
+async function openDocumentAttachment(docId){
+ const file=await readDocFile(docId);
+ if(!file){alert("Allegato non trovato su questo dispositivo.");return}
+ const url=URL.createObjectURL(file);
+ const w=window.open(url,"_blank");
+ if(!w){
+  const a=document.createElement("a");a.href=url;a.download=file.name||"documento";a.click();
+ }
+ setTimeout(()=>URL.revokeObjectURL(url),60000);
+}
+function addDocument(){const fs=data.folders.filter(x=>x.petId===pet().id),opts=["Senza cartella"].concat(fs.map(f=>String(f.id)+" — "+f.name));openModal("📄 Nuovo documento",input("dtitle","Nome documento","")+select("dtype","Tipo","Veterinario",["Veterinario","Assicurazione","Microchip","Vaccinazione","Prescrizione","Ricevuta","Adozione","Esame / laboratorio","Altro"])+select("dfolder","Cartella","Senza cartella",opts)+input("dloc","Dove è conservato?","Telefono, cartella, cloud...")+`<div class="field"><label>Allegato (facoltativo)</label><input id="newDocumentFile" type="file" accept=".pdf,image/*,.doc,.docx"></div><div class="actions"><button class="btn primary" data-modal="save-document">Salva</button><button class="btn" data-modal="close">Annulla</button></div>`)}
+
+document.getElementById("main").addEventListener("click",e=>{
+ const edit=e.target.closest("[data-edit-document]");if(edit){editDocument(Number(edit.dataset.editDocument));return}
+ const attach=e.target.closest("[data-attach-document]");if(attach){attachDocument(Number(attach.dataset.attachDocument));return}
+ const open=e.target.closest("[data-open-document]");if(open){openDocumentAttachment(Number(open.dataset.openDocument));return}
+ const a=e.target.closest("[data-action]");if(a){
+  const x=a.dataset.action;
+  if(x==="add-health")addHealth();else if(x==="add-reminder")addReminder();else if(x==="add-expense")addExpense();else if(x==="add-folder")addFolder();else if(x==="add-document")addDocument();
+  else if(x==="save-profile")saveProfile();else if(x==="remove-photo"){pet().photo="";save();profile()}
+  else if(x==="export")exportData();else if(x==="import")importData();else if(x==="print")printSummary();
+  return;
+ }
+ const p=e.target.closest("[data-pet]");if(p){data.activePet=Number(p.dataset.pet);save();renderPetbar();show("profile");return}
+ const dp=e.target.closest("[data-delete-pet]");if(dp){deletePet(Number(dp.dataset.deletePet));return}
+ const d=e.target.closest("[data-del]");if(d){deleteItem(d.dataset.del,Number(d.dataset.id));return}
+ const f=e.target.closest("[data-del-folder]");if(f){deleteFolder(Number(f.dataset.delFolder));return}
+ const t=e.target.closest("[data-theme]");if(t){data.theme=t.dataset.theme;save();applyTheme();settings();return}
+});
+
+document.getElementById("modal").addEventListener("click",async e=>{
+ const b=e.target.closest("[data-modal]");if(!b)return;const x=b.dataset.modal;
+ if(x==="close")closeModal();
+ else if(x==="save-health"){data.health.push({id:id(),petId:pet().id,date:val("hdate"),type:val("htype"),title:val("htitle")||"Record",notes:val("hnotes")});save();closeModal();show("health")}
+ else if(x==="save-reminder"){data.reminders.push({id:id(),petId:pet().id,title:val("rtitle")||"Promemoria",date:val("rdate"),repeat:val("rrepeat")});save();closeModal();show("reminders")}
+ else if(x==="save-expense"){data.expenses.push({id:id(),petId:pet().id,date:val("edate"),category:val("ecat"),description:val("edesc"),amount:Number(val("eamount"))||0});save();closeModal();show("expenses")}
+ else if(x==="save-folder"){data.folders.push({id:id(),petId:pet().id,name:val("fname")||"Nuova cartella"});save();closeModal();show("documents")}
+ else if(x==="save-document"){const fv=val("dfolder"),d={id:id(),petId:pet().id,title:val("dtitle")||"Documento",type:val("dtype"),folderId:fv==="Senza cartella"?null:Number(fv.split(" — ")[0]),location:val("dloc")};const file=document.getElementById("newDocumentFile")?.files?.[0];if(file&&file.size>15*1024*1024){alert("File troppo grande. Massimo 15 MB.");return}data.documents.push(d);if(file){const ok=await storeDocFile(d.id,file);if(ok){d.fileName=file.name;d.fileSize=file.size;d.fileType=file.type||"application/octet-stream"}}save();closeModal();show("documents")}
+else if(x==="update-document"){const d=data.documents.find(z=>z.id===Number(b.dataset.docId));if(!d)return;const fv=val("editFolder");d.title=val("editTitle")||"Documento";d.type=val("editType");d.folderId=fv==="Senza cartella"?null:Number(fv.split(" — ")[0]);d.location=val("editLocation");const file=document.getElementById("editFile")?.files?.[0];if(file&&file.size>15*1024*1024){alert("File troppo grande. Massimo 15 MB.");return}if(file){const ok=await storeDocFile(d.id,file);if(ok){d.fileName=file.name;d.fileSize=file.size;d.fileType=file.type||"application/octet-stream"}}save();closeModal();show("documents")}
+});
+
+document.addEventListener("change",e=>{
+ if(e.target.id!=="photoInput")return;
+ const file=e.target.files&&e.target.files[0];if(!file)return;
+ if(!file.type.startsWith("image/")){alert("Seleziona un'immagine.");return}
+ const r=new FileReader();
+ r.onload=()=>{const img=new Image();img.onload=()=>{
+   const max=900,scale=Math.min(1,max/Math.max(img.width,img.height)),c=document.createElement("canvas");
+   c.width=Math.max(1,Math.round(img.width*scale));c.height=Math.max(1,Math.round(img.height*scale));c.getContext("2d").drawImage(img,0,0,c.width,c.height);
+   pet().photo=c.toDataURL("image/jpeg",.82);save();profile();
+ };img.src=r.result};
+ r.readAsDataURL(file);
+});
+
+function saveProfile(){const p=pet();p.name=val("pname")||"Nuovo animale domestico";p.species=val("pspecies");p.breed=val("pbreed");p.dob=val("pdob");p.sex=val("psex");p.color=val("pcolor");p.microchip=val("pchip");p.weight=val("pweight");p.owner=val("powner");p.phone=val("pphone");p.notes=val("pnotes");save();renderPetbar();show("profile");}
+function newPet(){const p={id:id(),name:"Nuovo animale domestico",species:"Cane",breed:"",dob:"",sex:"",color:"",microchip:"",owner:"",phone:"",weight:"",notes:"",photo:""};data.pets.push(p);data.activePet=p.id;save();renderPetbar();show("profile")}
+function deletePet(pid){if(data.pets.length<2){alert("Deve rimanere almeno un animale.");return}if(!confirm("Eliminare questo animale e i suoi dati?"))return;data.pets=data.pets.filter(p=>p.id!==pid);["health","reminders","expenses","documents","folders"].forEach(k=>data[k]=data[k].filter(x=>x.petId!==pid));data.activePet=data.pets[0].id;save();renderPetbar();show("profile")}
+function deleteItem(group,pid){if(!confirm("Eliminare questo elemento?"))return;if(group==="documents")removeDocFile(pid);data[group]=data[group].filter(x=>x.id!==pid);save();show(group==="health"?"health":group)}
+function deleteFolder(fid){if(!confirm("Eliminare la cartella? I documenti rimarranno senza cartella."))return;data.folders=data.folders.filter(f=>f.id!==fid);data.documents.forEach(d=>{if(d.folderId===fid)d.folderId=null});save();show("documents")}
+function exportData(){const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="pet-care-organizer-backup.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+function importData(){const i=document.createElement("input");i.type="file";i.accept=".json,application/json";i.onchange=()=>{const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(!Array.isArray(x.pets))throw 0;data=x;data.health||=[];data.reminders||=[];data.expenses||=[];data.documents||=[];data.folders||=[];ensurePet();save();applyTheme();renderPetbar();show("home");alert("Backup importato.");}catch(e){alert("File di backup non valido.")}};r.readAsText(f)};i.click()}
+function printSummary(){const p=pet(),h=data.health.filter(x=>x.petId===p.id),r=data.reminders.filter(x=>x.petId===p.id);const w=window.open("","_blank");if(!w){alert("Consenti le finestre pop-up per stampare.");return}w.document.write(`<html><head><title>${esc(p.name)} — Vet Summary</title><style>body{font-family:Arial;padding:25px}li{margin:6px 0}.box{border:1px solid #ddd;padding:12px;border-radius:10px;margin:12px 0}</style></head><body><h1>🐾 ${esc(p.name)} — Scheda veterinaria</h1><div class="box"><b>Specie:</b> ${esc(p.species)}<br><b>Razza:</b> ${esc(p.breed)}<br><b>Nascita:</b> ${esc(p.dob)}<br><b>Microchip:</b> ${esc(p.microchip)}<br><b>Proprietario:</b> ${esc(p.owner)}<br><b>Telefono:</b> ${esc(p.phone)}<br><b>Peso:</b> ${esc(p.weight)}</div><div class="box"><h3>Salute</h3><ul>${h.map(x=>`<li>${esc(x.date)} — ${esc(x.type)} — ${esc(x.title)} ${x.notes?"("+esc(x.notes)+")":""}</li>`).join("")||"<li>Nessun record</li>"}</ul></div><div class="box"><h3>Promemoria</h3><ul>${r.map(x=>`<li>${esc(x.date)} — ${esc(x.title)}</li>`).join("")||"<li>Nessuno</li>"}</ul></div><script>window.print()<\/script></body></html>`);w.document.close()}
+
+renderPetbar();home();
+ if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js", { scope: "./" })
+      .catch(error => console.error("Service Worker:", error));
+  });
+ }
+</script>
+</body>
+</html>
